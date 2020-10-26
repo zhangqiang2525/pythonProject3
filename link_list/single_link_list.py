@@ -13,10 +13,10 @@ class Solution(object):
 
     def is_empty(self):
         """
-        头节点为空，则返回True 否则返回False
+        头节点为None，则返回True 否则返回False
         :return:
         """
-        return False if self.__head is None else True
+        return True if self.__head is None else False
 
     def add(self, item):
         """
@@ -85,7 +85,47 @@ class Solution(object):
             node.pointer = pur.pointer
             pur = node
 
+    def remove(self, item):
+        """
+        删除节点
+        :param item: 要删除的值
+        :return:
+        """
+        # 如果链表为空，则不执行删除操作
+        if self.is_empty():
+            print('链表为空')
+            return
 
+        pre = None  # 记录当前节点的前一个节点
+        cur = self.__head
+        while cur is not None:
+            if cur.value != item:
+                pre = cur
+                cur = cur.pointer
+            else:
+                # 若要删除的点为头节点
+                if cur == self.__head:
+                    self.__head = cur.pointer
+                    break
+                else:
+                    pre.pointer = cur.pointer
+                    break
+
+    def search(self, item):
+        """
+        查找节点是否存在
+        :param item:
+        :return:
+        """
+        cur = self.__head
+        while cur is not None:
+            if cur.value == item:
+                return True
+
+            else:
+                cur = cur.pointer
+
+        return False
 
     def length(self):
         """
