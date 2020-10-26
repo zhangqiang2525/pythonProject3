@@ -7,7 +7,7 @@ class Node(object):
         self.pointer = None
 
 
-class Solution(object):
+class single_Link_list(object):
     def __init__(self, node=None):
         self.__head = node
 
@@ -71,7 +71,7 @@ class Solution(object):
             # 如果插入的位序小于0，即在第一个元素之前，则使用头插法
             self.add(item)
 
-        if pos >= self.length():
+        elif pos >= self.length():
             # 如果插入的位序大于当前链表长度，则使用尾插法
             self.append(item)
 
@@ -83,7 +83,7 @@ class Solution(object):
                 length += 1
                 pur = pur.pointer
             node.pointer = pur.pointer
-            pur = node
+            pur.pointer = node
 
     def remove(self, item):
         """
@@ -139,3 +139,30 @@ class Solution(object):
             cur = cur.pointer
         return count
 
+    def travel(self):
+        # 遍历整个链表
+        cur = self.__head
+        while cur is not None:
+            print(cur.value, end=' ')
+            cur = cur.pointer
+        print()
+
+
+single_obj=single_Link_list()
+print(single_obj.is_empty())
+print(single_obj.length())
+single_obj.append(1)
+single_obj.append(2)
+single_obj.append(3)
+single_obj.append(4)
+single_obj.append(5)
+single_obj.travel()
+single_obj.add(-1)
+single_obj.travel()
+single_obj.insert(-1, -2)
+single_obj.travel()
+single_obj.insert(2, 0)
+single_obj.travel()
+print(single_obj.search(0))
+single_obj.remove(2)
+single_obj.travel()
