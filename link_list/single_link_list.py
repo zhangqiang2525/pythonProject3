@@ -52,7 +52,7 @@ class single_Link_list(object):
             # 判断节点的链接域是否为空
             while cur.pointer is not None:
                 cur = cur.pointer
-            # 如果为空，则当前元素的链接域直线新节点
+            # 如果为空，则当前元素的链接域指向新节点
             cur.pointer = node
 
     def insert(self, pos, item):
