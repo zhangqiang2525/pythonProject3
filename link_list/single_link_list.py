@@ -147,8 +147,21 @@ class single_Link_list(object):
             cur = cur.pointer
         print()
 
+    def reversed(self):  # 循环的方法反转链表
+        if self.__head is None or self.__head.pointer is None:
+            return self.__head
+        current, prev, h = self.__head, None, self.__head
+        while current:
+            h = current
+            next_node = current.pointer
+            current.pointer = prev
+            prev = current
+            current = next_node
 
-single_obj=single_Link_list()
+        return h
+
+
+single_obj = single_Link_list()
 print(single_obj.is_empty())
 print(single_obj.length())
 single_obj.append(1)
@@ -166,3 +179,7 @@ single_obj.travel()
 print(single_obj.search(0))
 single_obj.remove(2)
 single_obj.travel()
+p = single_obj.reversed()
+while p:
+    print(p.value, end=' ')
+    p = p.pointer
