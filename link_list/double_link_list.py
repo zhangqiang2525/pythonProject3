@@ -60,8 +60,12 @@ class DLinkList(object):
         """在指定位置添加节点"""
         if pos <= 0:
             self.add(item)
-        elif pos > (self.length() - 1):
+        elif pos == (self.length()):
             self.append(item)
+
+        elif pos > self.length():
+            print('您插入的位置大于当前链表的位置')
+            return
         else:
             node = Node(item)
             cur = self._head

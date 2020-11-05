@@ -71,9 +71,13 @@ class single_Link_list(object):
             # 如果插入的位序小于0，即在第一个元素之前，则使用头插法
             self.add(item)
 
-        elif pos >= self.length():
+        elif pos == (self.length() - 1):
             # 如果插入的位序大于当前链表长度，则使用尾插法
             self.append(item)
+
+        elif pos > self.length():
+            print('您插入的位置大于当前链表长度')
+            return
 
         else:
             node = Node(item)
@@ -176,6 +180,7 @@ single_obj.insert(-1, -2)
 single_obj.travel()
 single_obj.insert(2, 0)
 single_obj.travel()
+print(f'链表的长度为{single_obj.length()}')
 print(single_obj.search(0))
 single_obj.remove(2)
 single_obj.travel()

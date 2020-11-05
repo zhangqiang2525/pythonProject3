@@ -1,10 +1,11 @@
 class Node(object):
     def __init__(self, value):
         self.value = value
+        self.prev = None
         self.next = None
 
 
-class Single_link_list(object):
+class Double_link_list(object):
     def __init__(self, node=None):
         self.__head = node
 
@@ -13,106 +14,92 @@ class Single_link_list(object):
 
     def add(self, item):
         node = Node(item)
-        if self.is_empty():
+        if self.__head is None:
             self.__head = node
-
         else:
             node.next = self.__head
+            self.__head.prev = node
             self.__head = node
 
     def append(self, item):
         node = Node(item)
         if self.__head is None:
             self.__head = node
+
         else:
             current = self.__head
             while current.next is not None:
                 current = current.next
             current.next = node
+            node.prev = current
 
     def insert(self, pos, item):
         if pos <= 0:
             self.add(item)
-
         elif pos == self.length():
             self.append(item)
 
         elif pos > self.length():
-            print('所插入的位置大于当前链表长度')
+            print('您插入的位置大于当前链表的长度')
             return
-
         else:
             node = Node(item)
-            cur = self.__head
             count = 0
+            current = self.__head
             while count < (pos - 1):
-                cur = cur.next
                 count += 1
-            node.next = cur.next
-            cur.next = node
+                current = current.next
+            node.prev = current
+            node.next = current.next
+            current.next.prev = node
+            current.next = node
 
     def remove(self, item):
         if self.is_empty():
-            print('链表为空')
+            print('链表当前为空不能执行该操作')
             return
         else:
-            pre = None
-            cur = self.__head
-            while cur is not None:
-                if cur.value != item:
-                    pre = cur
-                    cur = cur.next
+            current = self.__head
+            if current.value == item:
+                if current.next is None:
+                    self.__head = None
                 else:
-                    if cur == self.__head:
-                        self.__head = self.__head.next
-                        break
-                    else:
-                        pre.next = cur.next
-                        break
+                    current.next.prev = None
+                    self.__head = current.next
+                return
+            while current is not None:
+                if current.value == item:
+                    current.prev.next = current.next
+                    current.next.prev = current.prev
+                    break
+                current = current.next
 
     def search(self, item):
-        cur = self.__head
-        while cur is not None:
-            if cur.value == item:
+        current = self.__head
+        while current is not None:
+            if current.value == item:
                 return True
             else:
-                cur = cur.next
-
+                current = current.next
         return False
 
     def length(self):
-        cur = self.__head
         count = 0
-        while cur is not None:
+        current = self.__head
+        while current is not None:
             count += 1
-            cur = cur.next
+            current = current.next
         return count
 
     def travel(self):
-        cur = self.__head
-        while cur is not None:
-            print(cur.value, end=' ')
-            cur = cur.next
+        current = self.__head
+        while current is not None:
+            print(current.value, end=' ')
+            current = current.next
         print()
 
-    def reversed(self):
-        cur = self.__head
-        if cur is None or cur.next is None:
-            return cur
 
-        else:
-            pre = None
-            h = self.__head
-            while cur:
-                h = cur
-                next_node = cur.next
-                cur.next = pre
-                pre = cur
-                cur = next_node
-            return h
-
-
-single_obj = Single_link_list()
+single_obj = Double_link_list()
 print(single_obj.is_empty())
 print(single_obj.length())
 single_obj.append(1)
@@ -127,10 +114,7 @@ single_obj.insert(-1, -2)
 single_obj.travel()
 single_obj.insert(2, 0)
 single_obj.travel()
+print(f'链表的长度为{single_obj.length()}')
 print(single_obj.search(0))
 single_obj.remove(2)
 single_obj.travel()
-p = single_obj.reversed()
-while p:
-    print(p.value, end=' ')
-    p = p.next
