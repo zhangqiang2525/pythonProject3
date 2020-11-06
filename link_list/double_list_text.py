@@ -16,6 +16,7 @@ class Double_link_list(object):
         node = Node(item)
         if self.__head is None:
             self.__head = node
+
         else:
             node.next = self.__head
             self.__head.prev = node
@@ -27,76 +28,96 @@ class Double_link_list(object):
             self.__head = node
 
         else:
-            current = self.__head
-            while current.next is not None:
-                current = current.next
-            current.next = node
-            node.prev = current
+            cur = self.__head
+            while cur.next is not None:
+                cur = cur.next
+            node.prev = cur
+            cur.next = node
 
     def insert(self, pos, item):
         if pos <= 0:
             self.add(item)
+
         elif pos == self.length():
             self.append(item)
 
         elif pos > self.length():
-            print('您插入的位置大于当前链表的长度')
+            print('您插入的位置大于当前链表长度')
             return
+
         else:
-            node = Node(item)
+            cur = self.__head
             count = 0
-            current = self.__head
+            node = Node(item)
             while count < (pos - 1):
                 count += 1
-                current = current.next
-            node.prev = current
-            node.next = current.next
-            current.next.prev = node
-            current.next = node
+                cur = cur.next
+
+            node.prev = cur
+            node.next = cur.next
+            cur.next.prev = node
+            cur.next = node
+
+    def search(self, item):
+        cur = self.__head
+        while cur is not None:
+            if cur.value == item:
+                return True
+
+            else:
+                cur = cur.next
+        return False
 
     def remove(self, item):
         if self.is_empty():
-            print('链表当前为空不能执行该操作')
+            print('链表为空不能执行该操作')
             return
         else:
-            current = self.__head
-            if current.value == item:
-                if current.next is None:
+            cur = self.__head
+            if cur.value == item:
+                if cur.next is None:
                     self.__head = None
                 else:
-                    current.next.prev = None
-                    self.__head = current.next
+                    cur.next.prev = None
+                    self.__head = cur.next
                 return
-            while current is not None:
-                if current.value == item:
-                    current.prev.next = current.next
-                    current.next.prev = current.prev
-                    break
-                current = current.next
 
-    def search(self, item):
-        current = self.__head
-        while current is not None:
-            if current.value == item:
-                return True
-            else:
-                current = current.next
-        return False
+            while cur is not None:
+                if cur.value == item:
+                    cur.prev.next = cur.next
+                    cur.next.prev = cur.prev
+                    break
+                cur = cur.next
 
     def length(self):
+        cur = self.__head
         count = 0
-        current = self.__head
-        while current is not None:
+        while cur is not None:
+            cur = cur.next
             count += 1
-            current = current.next
         return count
 
     def travel(self):
-        current = self.__head
-        while current is not None:
-            print(current.value, end=' ')
-            current = current.next
+        cur = self.__head
+        while cur is not None:
+            print(cur.value, end=' ')
+            cur = cur.next
         print()
+
+    def reverse(self):
+        pre = None
+        cur = self.__head
+        if self.is_empty():
+            print('链表为空，不能执行该操作')
+            return
+
+        while cur:
+            next_node = cur.next
+            cur.next = pre
+            cur.prev = next_node
+            pre = cur
+            cur = next_node
+        self.__head = pre
 
 
 single_obj = Double_link_list()
@@ -117,4 +138,6 @@ single_obj.travel()
 print(f'链表的长度为{single_obj.length()}')
 print(single_obj.search(0))
 single_obj.remove(2)
+single_obj.travel()
+single_obj.reverse()
 single_obj.travel()

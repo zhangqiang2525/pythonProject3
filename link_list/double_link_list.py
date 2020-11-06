@@ -122,6 +122,53 @@ class DLinkList(object):
         """遍历链表"""
         cur = self.__head
         while cur is not None:
-            print(cur.item)
+            print(cur.item, end=' ')
             cur = cur.next
         print()
+
+    def reverse(self):
+        """
+        将链表头尾反转
+        :return:
+        """
+        pre = None
+        current = self.__head  # 将头节点保存在current中
+
+        # 当链表为非空的时候，需要执行相应反转的操作
+        if self.is_empty():
+            print('链表为空不能执行当前操作')
+            return
+        # 分别将相邻的两个节点的前驱后继关系进行反转
+        while current:
+            next_node = current.next  # 将下一个节点保存在next_node中
+            current.next = pre  # 由于反转链表，因此头节点反转后，成为尾节点，应该指向None
+            current.prev = next_node  # 尾节点的前驱应指向原本的后继
+
+            pre = current  # 更新prev，向后移动
+            current = next_node  # 更新current，向后移动
+        # 到达链表尾部时，需要特殊处理
+        self.__head = pre
+
+
+single_obj = DLinkList()
+print(single_obj.is_empty())
+print(single_obj.length())
+single_obj.append(1)
+single_obj.append(2)
+single_obj.append(3)
+single_obj.append(4)
+single_obj.append(5)
+single_obj.travel()
+single_obj.add(-1)
+single_obj.travel()
+single_obj.insert(-1, -2)
+single_obj.travel()
+single_obj.insert(2, 0)
+single_obj.travel()
+print(f'链表的长度为{single_obj.length()}')
+print(single_obj.search(0))
+single_obj.remove(2)
+single_obj.travel()
+single_obj.reverse()
+single_obj.travel()
+single_obj.travel()
