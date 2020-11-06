@@ -49,7 +49,7 @@ class single_Link_list(object):
             self.__head = node
         else:
             cur = self.__head
-            # 判断节点的链接域是否为空
+            # 判断节点的链接域是否为空，插在最后一个节点的后面所以需要判断cur.next is not None
             while cur.pointer is not None:
                 cur = cur.pointer
             # 如果为空，则当前元素的链接域指向新节点
