@@ -1,9 +1,8 @@
 class Node(object):
-    def __init__(self, value):
+    def __init__(self,value):
         self.value = value
         self.prev = None
         self.next = None
-
 
 class Double_link_list(object):
     def __init__(self, node=None):
@@ -16,7 +15,6 @@ class Double_link_list(object):
         node = Node(item)
         if self.__head is None:
             self.__head = node
-
         else:
             node.next = self.__head
             self.__head.prev = node
@@ -26,7 +24,6 @@ class Double_link_list(object):
         node = Node(item)
         if self.__head is None:
             self.__head = node
-
         else:
             cur = self.__head
             while cur.next is not None:
@@ -46,27 +43,16 @@ class Double_link_list(object):
             return
 
         else:
-            cur = self.__head
             count = 0
             node = Node(item)
+            cur = self.__head
             while count < (pos - 1):
                 count += 1
                 cur = cur.next
-
             node.prev = cur
             node.next = cur.next
             cur.next.prev = node
             cur.next = node
-
-    def search(self, item):
-        cur = self.__head
-        while cur is not None:
-            if cur.value == item:
-                return True
-
-            else:
-                cur = cur.next
-        return False
 
     def remove(self, item):
         if self.is_empty():
@@ -81,44 +67,50 @@ class Double_link_list(object):
                     cur.next.prev = None
                     self.__head = cur.next
                 return
-
             while cur is not None:
                 if cur.value == item:
-                    cur.prev.next = cur.next
                     cur.next.prev = cur.prev
-                    break
+                    cur.prev.next = cur.next
                 cur = cur.next
 
-    def length(self):
+    def search(self, item):
         cur = self.__head
-        count = 0
         while cur is not None:
-            cur = cur.next
+            if cur.value == item:
+                return True
+            else:
+                cur = cur.next
+        return False
+
+    def length(self):
+        count = 0
+        cur = self.__head
+        while cur:
             count += 1
+            cur = cur.next
         return count
 
     def travel(self):
         cur = self.__head
-        while cur is not None:
+        while cur:
             print(cur.value, end=' ')
             cur = cur.next
         print()
 
     def reverse(self):
+        if self.is_empty():
+            print('链表为空不能执行该操作')
+            return
         pre = None
         cur = self.__head
-        if self.is_empty():
-            print('链表为空，不能执行该操作')
-            return
-
         while cur:
             next_node = cur.next
             cur.next = pre
             cur.prev = next_node
+
             pre = cur
             cur = next_node
         self.__head = pre
-
 
 single_obj = Double_link_list()
 print(single_obj.is_empty())
